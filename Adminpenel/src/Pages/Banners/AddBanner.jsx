@@ -51,14 +51,6 @@ const AddBanner = () => {
                         <label htmlFor="bannerImage" className="form-label">Banner Image<sup className='text-danger'>*</sup></label>
                         <input type="file" className="form-control" id="bannerImage" name='bannerImage' onChange={getFileData} required/>
                     </div>
-                    {/* <div className="col-12">
-                        <div className="form-check">
-                            <input className="form-check-input"  type="checkbox" name="active" id="active" />
-                            <label className="form-check-label" htmlFor="active">
-                                Active 
-                            </label>
-                        </div>
-                    </div> */}
                     <div className="col-md-6 text-center mt-5">
                         <button type="submit" disabled={isLoading} className={`${isLoading ? 'not-allowed' : 'allowed'}`}>{isLoading ? "Please Wait..." : "Add Banner"}</button>
                     </div>

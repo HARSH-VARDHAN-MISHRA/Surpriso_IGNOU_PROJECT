@@ -61,9 +61,4 @@ const updateCartItemQuantity = async (req, res) => {
     }
 }
 
-module.exports = {
-    addItemToCart: addItemToCart,
-    getCart: getCart,
-    removeItemFromCart: removeItemFromCart,
-    updateCartItemQuantity: updateCartItemQuantity
-}
+module.exports = { addItemToCart: addItemToCart, getCart: getCart, removeItemFromCart: removeItemFromCart, updateCartItemQuantity: updateCartItemQuantity }

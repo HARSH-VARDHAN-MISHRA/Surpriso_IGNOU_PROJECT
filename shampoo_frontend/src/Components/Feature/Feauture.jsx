@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react'
 import Newsletter from '../Newsletter/Newsletter'
-import image from '../../Images/8-removebg-preview.png'
-
 const Feauture = () => {
     const location = window.location.pathname
     useEffect(() => {
@@ -12,7 +10,6 @@ const Feauture = () => {
     }, [])
     return (
         <>
-
             {/* <!-- Hero Start --> */}
             {
                 location === '/feature' ? <div class="container-fluid bg-primary hero-header mb-5">

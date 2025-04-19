@@ -1,25 +1,30 @@
 import React, { useEffect, useState } from 'react'
-// import Sidebar from '../Sidebar'
 import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
-
 const EditOrder = () => {
   const navigate = useNavigate()
+  const token = sessionStorage.getItem("token");
   let { _id } = useParams()
   let [data, setData] = useState({})
   let [user, setUser] = useState({})
   let [orderstatus, setOrderstatus] = useState("")
   let [paymentstatus, setPaymentstatus] = useState("")
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/api/checkout/admin/${_id}`);
-        console.log(response)
+        const response = await axios.get(`http://localhost:8080/api/checkout/admin/${_id}`, {
+          headers: {
+            Authorization: token ? `Bearer ${token}` : "",
+          },
+        });
         setData(response.data.data);
         setOrderstatus(response.data.data.orderstatus);
         setPaymentstatus(response.data.data.paymentstatus);
-        const userResponse = await axios.get(`http://localhost:8080/api/user/${response.data.data.userid}`);
+        const userResponse = await axios.get(`http://localhost:8080/api/user/${response.data.data.userid}`, {
+          headers: {
+            Authorization: token ? `Bearer ${token}` : "",
+          },
+        });
         setUser(userResponse.data.data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -38,7 +43,11 @@ const EditOrder = () => {
       setPaymentstatus(value)
   }
   const updateItem = async () => {
-    let res = await axios.put("http://localhost:8080/api/checkout/admin/" + _id, { ...data, orderstatus: orderstatus, paymentstatus: paymentstatus })
+    let res = await axios.put("http://localhost:8080/api/checkout/admin/" + _id, { ...data, orderstatus: orderstatus, paymentstatus: paymentstatus }, {
+      headers: {
+        Authorization: token ? `Bearer ${token}` : "",
+      },
+    })
     if (res.status === 200) {
       navigate("/all-orders")
     }
@@ -49,9 +58,6 @@ const EditOrder = () => {
     <>
       <div className="container-fluid">
         <div className="row">
-          {/* <div className="col-md-3">
-            <Sidebar />
-          </div> */}
           <div className="col-md-12">
             <h4 className="mt-1">Update Order Status</h4>
             <table className='table table-bordered table-striped table-hover'>

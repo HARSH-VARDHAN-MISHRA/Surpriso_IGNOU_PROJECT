@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { Link, useNavigate } from "react-router-dom";
 import "./Checkout.css"
-
 export default function Checkout() {
     const navigate = useNavigate()
     let [user, setUser] = useState({});
@@ -11,27 +10,31 @@ export default function Checkout() {
     let [total, setTotal] = useState(0);
     let [mode, setMode] = useState("COD");
     const token = sessionStorage.getItem("token");
-
-
     const getAPIData = async () => {
         try {
-            let res = await axios.get('http://localhost:8080/api/user/' + sessionStorage.getItem("userid"));
+            let res = await axios.get('http://localhost:8080/api/user/' + sessionStorage.getItem("userid"), {
+                headers: {
+                    Authorization: token ? `Bearer ${token}` : "",
+                },
+            });
             setUser(res.data.data);
         } catch (error) {
             console.log(error);
         }
     };
-
     const getCartData = async () => {
         try {
-            let res = await axios.get('http://localhost:8080/api/cart/' + sessionStorage.getItem("userid"));
+            let res = await axios.get('http://localhost:8080/api/cart/' + sessionStorage.getItem("userid"), {
+                headers: {
+                    Authorization: token ? `Bearer ${token}` : "",
+                },
+            });
             setCart(res.data.data);
             calculateTotal(res.data.data);
         } catch (error) {
             console.log(error);
         }
     };
-
     const calculateTotal = (cartItems) => {
         let totalPrice = 0;
         for (const item of cartItems) {
@@ -39,7 +42,6 @@ export default function Checkout() {
         }
         setTotal(totalPrice);
     };
-
     const placeOrder = async () => {
         try {
             if (user.address === "" || user.pin === "" || user.city === "" || user.state === "") {
@@ -55,23 +57,39 @@ export default function Checkout() {
             };
             try {
                 if (mode === "COD") {
-                    const res = await axios.post('http://localhost:8080/api/checkout', item);
+                    const res = await axios.post('http://localhost:8080/api/checkout', item, {
+                        headers: {
+                            Authorization: token ? `Bearer ${token}` : "",
+                        },
+                    });
                     console.log(res)
                     if (res.status === 200) {
                         toast.success("Order Place Successfully")
                         for (let items of cart) {
-                            let deleteItem = await axios.delete("http://localhost:8080/api/cart/" + items._id)
+                            let deleteItem = await axios.delete("http://localhost:8080/api/cart/" + items._id, {
+                                headers: {
+                                    Authorization: token ? `Bearer ${token}` : "",
+                                },
+                            })
                             console.log(deleteItem);
                             setCart([]);
                         }
                     }
                 }
                 else {
-                    const res = await axios.post('http://localhost:8080/api/checkout', item);
+                    const res = await axios.post('http://localhost:8080/api/checkout', item, {
+                        headers: {
+                            Authorization: token ? `Bearer ${token}` : "",
+                        },
+                    });
                     if (res.data.success) {
                         for (let items of cart) {
-                            let deleteItem = await axios.delete("http://localhost:8080/api/cart/" + items._id)
-                            console.log(deleteItem);
+                            let deleteItem = await axios.delete("http://localhost:8080/api/cart/" + items._id, {
+                                headers: {
+                                    Authorization: token ? `Bearer ${token}` : "",
+                                },
+                            })
+                            // console.log(deleteItem);
                             setCart([]);
                         }
                         const order = res.data.order;
@@ -114,7 +132,6 @@ export default function Checkout() {
             console.log("Error:", error);
         }
     };
-
     useEffect(() => {
         getAPIData();
         getCartData();

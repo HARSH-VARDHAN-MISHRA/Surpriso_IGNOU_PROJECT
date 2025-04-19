@@ -4,9 +4,6 @@ import axios from 'axios';
 const HeroSection = () => {
   const [banner, setBanner] = useState([]);
   const token = sessionStorage.getItem("token");
-
-  // console.log("Token in frontend:", token); // Debugging token
-
   const getBanner = async () => {
     try {
       const res = await axios.get("http://localhost:8080/api/banner", {
@@ -14,7 +11,6 @@ const HeroSection = () => {
           Authorization: token ? `Bearer ${token}` : "",
         },
       });
-      // console.log("Banner Response:", res);
       setBanner(res.data.data);
     } catch (error) {
       console.log("Error fetching banners:", error);

@@ -8,13 +8,11 @@ const EditCategory = () => {
     const navigate = useNavigate()
     const [btnLoading, setBtnLoading] = useState(false);
     const token = sessionStorage.getItem("token");
-
     const { _id } = useParams()
     const [data, setData] = useState({
         categoryName: "",
         categoryImage: ""
     })
-
     const getApiData = async () => {
         try {
             const res = await axios.get("http://localhost:8080/api/category/" + _id, {
@@ -32,22 +30,17 @@ const EditCategory = () => {
     useEffect(() => {
         getApiData()
     }, [_id])
-
-
     const getInputData = (e) => {
         const { name, value } = e.target
         setData({ ...data, [name]: value })
     }
-
     const getFileData = (e) => {
         const { name, files } = e.target
         setData({ ...data, [name]: files[0] })
     }
-
     const formdata = new FormData()
     formdata.append("categoryName", data.categoryName)
     formdata.append("categoryImage", data.categoryImage)
-
     const postData = async (e) => {
         e.preventDefault()
         setBtnLoading(true)
@@ -62,7 +55,6 @@ const EditCategory = () => {
             setBtnLoading(false)
         }
     }
-
     return (
         <>
             <ToastContainer />
@@ -74,7 +66,6 @@ const EditCategory = () => {
                     <Link to="/all-category" className="add-new">Back <i className="fa-regular fa-circle-left"></i></Link>
                 </div>
             </div>
-
             <div className="d-form">
                 <form className="row g-3" onSubmit={postData}>
                     <div className="col-md-6">
@@ -86,7 +77,6 @@ const EditCategory = () => {
                         <input type="file" name='categoryImage' className="form-control" id="categoryImage" onChange={getFileData} />
                     </div>
                     <div className="col-12 text-center">
-                        {/* <button type="submit" className="">Update Category</button> */}
                         <button type="submit" className={`${btnLoading ? 'not-allowed' : 'allowed'}`} >{btnLoading ? "Please Wait.." : "Update Category"} </button>
                     </div>
                 </form>
@@ -94,5 +84,4 @@ const EditCategory = () => {
         </>
     );
 };
-
 export default EditCategory;

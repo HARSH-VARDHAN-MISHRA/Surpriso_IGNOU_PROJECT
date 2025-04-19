@@ -3,12 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 const EditProduct = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [category, setCategory] = useState([]);
     const token = sessionStorage.getItem("token");
-
     const [data, setData] = useState({
         categoryName: "",
         productName: "",
@@ -28,7 +26,6 @@ const EditProduct = () => {
     const [imageFields, setImageFields] = useState(["productImage1"]);
     const navigate = useNavigate();
     const { _id } = useParams();
-
     useEffect(() => {
         const getCategoryData = async () => {
             try {
@@ -44,7 +41,6 @@ const EditProduct = () => {
                 console.log(error);
             }
         };
-
         const getProductData = async () => {
             try {
                 const res = await axios.get(`http://localhost:8080/api/product/${_id}`, {
@@ -63,26 +59,21 @@ const EditProduct = () => {
                 console.log(error);
             }
         };
-
         getCategoryData();
         getProductData();
     }, [_id]);
-
     const getInputData = (e) => {
         const { name, value } = e.target;
         setData({ ...data, [name]: value });
     };
-
     const getFileData = (e) => {
         const { name, files } = e.target;
         setData({ ...data, [name]: files[0] });
     };
-
     const handleSizeChange = (index, e) => {
         const { name, value } = e.target;
         const updatedSizes = [...data.productSize];
         updatedSizes[index][name] = value;
-
         if (name === "price" || name === "discountPrice") {
             const price = updatedSizes[index].price;
             const discount = updatedSizes[index].discountPrice;
@@ -90,33 +81,27 @@ const EditProduct = () => {
                 updatedSizes[index].finalPrice = calculateFinalPrice(price, discount);
             }
         }
-
         setData({ ...data, productSize: updatedSizes });
     };
-
     const calculateFinalPrice = (price, discount) => {
         const discountAmount = (price * discount) / 100;
         return price - discountAmount;
     };
-
     const addSize = () => {
         setData({
             ...data,
             productSize: [...data.productSize, { sizeML: "", price: "", discountPrice: "", finalPrice: "", stock: "" }]
         });
     };
-
     const removeSize = (index) => {
         const updatedSizes = data.productSize.filter((_, i) => i !== index);
         setData({ ...data, productSize: updatedSizes });
     };
-
     const addImageField = () => {
         const newFieldName = `productImage${imageFields.length + 1}`;
         setImageFields([...imageFields, newFieldName]);
         setData({ ...data, [newFieldName]: "" });
     };
-
     const removeImageField = (index) => {
         const fieldName = imageFields[index];
         const updatedFields = imageFields.filter((_, i) => i !== index);
@@ -125,11 +110,9 @@ const EditProduct = () => {
         setImageFields(updatedFields);
         setData(newData);
     };
-
     const updateData = async (e) => {
         e.preventDefault();
         setIsLoading(true);
-
         const formData = new FormData();
         formData.append('categoryName', data.categoryName);
         formData.append('productName', data.productName);
@@ -146,7 +129,6 @@ const EditProduct = () => {
         imageFields.forEach(field => {
             formData.append(field, data[field]);
         });
-
         try {
             const res = await axios.put(`http://localhost:8080/api/product/${_id}`, formData, {
                 headers: {
@@ -164,7 +146,6 @@ const EditProduct = () => {
             setIsLoading(false);
         }
     };
-
     return (
         <>
             <ToastContainer />
@@ -176,7 +157,6 @@ const EditProduct = () => {
                     <Link to="/all-products" className="add-new">Back <i className="fa-regular fa-circle-left"></i></Link>
                 </div>
             </div>
-
             <div className="d-form">
                 <form className="row g-3" onSubmit={updateData}>
                     <div className="col-md-4">
@@ -193,22 +173,18 @@ const EditProduct = () => {
                         <label htmlFor="productName" className="form-label">Product Name<sup className='text-danger'>*</sup></label>
                         <input type="text" name='productName' onChange={getInputData} value={data.productName} className="form-control" required id="productName" />
                     </div>
-
                     <div className="col-12">
                         <label htmlFor="productSubDescription" className="form-label">Product Sub Description<sup className='text-danger'>*</sup></label>
                         <textarea name='productSubDescription' onChange={getInputData} value={data.productSubDescription} className="form-control" required id="productSubDescription" />
                     </div>
-
                     <div className="col-12">
                         <label htmlFor="productDescription" className="form-label">Product Description<sup className='text-danger'>*</sup></label>
                         <textarea name='productDescription' onChange={getInputData} value={data.productDescription} className="form-control" required id="productDescription" />
                     </div>
-
                     <div className="col-12">
                         <label htmlFor="productDetails" className="form-label">Product Details<sup className='text-danger'>*</sup></label>
                         <textarea name='productDetails' onChange={getInputData} value={data.productDetails} className="form-control" required id="productDetails" />
                     </div>
-
                     {data.productSize.map((size, index) => (
                         <div key={index} className="row g-3 align-items-end">
                             <div className="col-md-2">
@@ -236,11 +212,9 @@ const EditProduct = () => {
                             </div>
                         </div>
                     ))}
-
                     <div className="col-12">
                         <button type="button" className='btn btn-success' onClick={addSize}>Add New Size</button>
                     </div>
-
                     {imageFields.map((field, index) => (
                         <div key={index} className="col-md-3">
                             <label htmlFor={field}>Image<sup className='text-danger'>*</sup></label>
@@ -250,11 +224,9 @@ const EditProduct = () => {
                             )}
                         </div>
                     ))}
-
                     <div className="col-12">
                         <button type="button" className='btn btn-success' onClick={addImageField}>Add New Image</button>
                     </div>
-
                     <div className="col-12 text-center">
                         <button type="submit" className={`btn btn-primary ${isLoading ? 'not-allowed' : ''}`} disabled={isLoading}>
                             {isLoading ? "Please Wait..." : "Update Product"}
@@ -265,5 +237,4 @@ const EditProduct = () => {
         </>
     );
 };
-
 export default EditProduct;

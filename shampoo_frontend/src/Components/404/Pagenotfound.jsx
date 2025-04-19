@@ -24,8 +24,6 @@ const Pagenotfound = () => {
         </div>
     </div>
     {/* <!-- Hero End --> */}
-
-
     {/* <!-- 404 Start --> */}
     <div class="container-fluid py-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container text-center">
@@ -41,8 +39,6 @@ const Pagenotfound = () => {
         </div>
     </div>
     {/* <!-- 404 End --> */}
-        
-
     {/* <!-- Newsletter Start --> */}
     <div class="container-fluid newsletter bg-primary py-5 my-5">
         <div class="container py-5">
@@ -53,10 +49,8 @@ const Pagenotfound = () => {
             <div class="row justify-content-center">
                 <div class="col-md-7 wow fadeIn" data-wow-delay="0.5s">
                     <div class="position-relative w-100 mt-3 mb-2">
-                        <input class="form-control w-100 py-4 ps-4 pe-5" type="text" placeholder="Enter Your Email"
-                            style={{height: "48px"}} />
-                        <button type="button" class="btn shadow-none position-absolute top-0 end-0 mt-1 me-2"><i
-                                class="fa fa-paper-plane text-white fs-4"></i></button>
+                        <input class="form-control w-100 py-4 ps-4 pe-5" type="text" placeholder="Enter Your Email" style={{height: "48px"}} />
+                        <button type="button" class="btn shadow-none position-absolute top-0 end-0 mt-1 me-2"><i class="fa fa-paper-plane text-white fs-4"></i></button>
                     </div>
                 </div>
             </div>

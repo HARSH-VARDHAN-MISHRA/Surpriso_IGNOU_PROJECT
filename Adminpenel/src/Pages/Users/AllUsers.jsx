@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
 const AllUsers = () => {
     const [user, setUser] = useState([])
-
     const getUserData = async () => {
         try {
             const res = await axios.get("http://localhost:8080/api/user")
@@ -24,10 +22,9 @@ const AllUsers = () => {
                     <h4>All Users</h4>
                 </div>
                 <div className="links">
-                    {/* Additional links or actions can be placed here */}
+                    
                 </div>
             </div>
-
             <section className="dis-table">
                 <div className="table-responsive mt-4">
                     <table className="table table-bordered table-striped table-hover">
@@ -39,7 +36,6 @@ const AllUsers = () => {
                                 <th scope="col">Phone Number</th>
                                 <th scope="col">Role</th>
                                 <th scope="col">Created At</th>
-                                {/* Add more columns as needed */}
                             </tr>
                         </thead>
                         <tbody>
@@ -61,5 +57,4 @@ const AllUsers = () => {
         </>
     );
 };
-
 export default AllUsers;

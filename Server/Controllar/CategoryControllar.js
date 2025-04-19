@@ -1,7 +1,6 @@
 const category = require("../Model/Category")
 const { uploadimage, deleteImage } = require("../Utils/Cloudnary")
 const fs = require("fs")
-
 const createRecord = async (req, res) => {
     try {
         // console.log(req.body);
@@ -60,8 +59,6 @@ const createRecord = async (req, res) => {
         });
     }
 };
-
-
 const getAllRecord = async (req, res) => {
     try {
         const data = await category.find()
@@ -86,7 +83,6 @@ const getAllRecord = async (req, res) => {
         })
     }
 }
-
 const getSingleRecord = async (req, res) => {
     try {
         const data = await category.findOne({ _id: req.params._id })
@@ -111,8 +107,6 @@ const getSingleRecord = async (req, res) => {
         })
     }
 }
-
-
 const updateRecord = async (req, res) => {
     try {
         const data = await category.findOne({ _id: req.params._id })
@@ -147,7 +141,6 @@ const updateRecord = async (req, res) => {
         })
     }
 }
-
 const deleteRecord = async (req, res) => {
     try {
         const data = await category.findOne({ _id: req.params._id })
@@ -176,11 +169,4 @@ const deleteRecord = async (req, res) => {
         })
     }
 }
-
-module.exports = {
-    createRecord: createRecord,
-    getAllRecord: getAllRecord,
-    getSingleRecord: getSingleRecord,
-    updateRecord: updateRecord,
-    deleteRecord: deleteRecord
-}
+module.exports = { createRecord: createRecord, getAllRecord: getAllRecord, getSingleRecord: getSingleRecord, updateRecord: updateRecord, deleteRecord: deleteRecord }

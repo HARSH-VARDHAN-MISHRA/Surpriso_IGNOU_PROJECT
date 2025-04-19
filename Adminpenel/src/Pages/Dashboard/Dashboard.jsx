@@ -25,9 +25,18 @@ const Dashboard = () => {
   const [banner, setBanner] = useState([]);
   const [category, setCategory] = useState([]);
 
+  const token = sessionStorage.getItem("token");
+
+  const axiosConfig = {
+    headers: {
+      Authorization: token ? `Bearer ${token}` : "",
+    },
+  };
+
+
   const getBanner = async () => {
     try {
-      const res = await axios.get("http://localhost:8080/api/banner");
+         const res = await axios.get("http://localhost:8080/api/banner", axiosConfig);
       setBanner(res.data.data);
     } catch (error) {
       toast.error(error.response?.data?.message || 'An error occurred');
@@ -36,7 +45,7 @@ const Dashboard = () => {
 
   const getProduct = async () => {
     try {
-      const res = await axios.get("http://localhost:8080/api/product");
+      const res = await axios.get("http://localhost:8080/api/product", axiosConfig);
       setProduct(res.data.data);
     } catch (error) {
       toast.error(error.response?.data?.message || 'An error occurred');
@@ -45,7 +54,7 @@ const Dashboard = () => {
 
   const getOrder = async () => {
     try {
-      const res = await axios.get("http://localhost:8080/api/checkout");
+      const res = await axios.get("http://localhost:8080/api/checkout", axiosConfig);
       const orderData = res.data.data;
       setOrder(orderData);
       const codfilter = orderData.filter((x) => x.paymentmode === "COD");
@@ -63,7 +72,7 @@ const Dashboard = () => {
 
   const getnewsletter = async () => {
     try {
-      const res = await axios.get("http://localhost:8080/api/newsletter");
+      const res = await axios.get("http://localhost:8080/api/newsletter", axiosConfig);
       setNewsletter(res.data.data);
     } catch (error) {
       toast.error(error.response?.data?.message || 'An error occurred');
@@ -72,7 +81,7 @@ const Dashboard = () => {
 
   const getcategory = async () => {
     try {
-      const res = await axios.get("http://localhost:8080/api/category");
+      const res = await axios.get("http://localhost:8080/api/category", axiosConfig);
       setCategory(res.data.data);
     } catch (error) {
       toast.error(error.response?.data?.message || 'An error occurred');
@@ -81,7 +90,7 @@ const Dashboard = () => {
 
   const getcontact = async () => {
     try {
-      const res = await axios.get("http://localhost:8080/api/contact");
+      const res = await axios.get("http://localhost:8080/api/contact", axiosConfig);
       setContact(res.data.data);
     } catch (error) {
       toast.error(error.response?.data?.message || 'An error occurred');
@@ -90,7 +99,7 @@ const Dashboard = () => {
 
   const getusers = async () => {
     try {
-      const res = await axios.get("http://localhost:8080/api/user");
+      const res = await axios.get("http://localhost:8080/api/user", axiosConfig);
       setUsers(res.data.data);
     } catch (error) {
       toast.error(error.response?.data?.message || 'An error occurred');

@@ -4,9 +4,6 @@ const Product = require("../Model/ProductModel");
 const { uploadimage, deleteImage } = require("../Utils/Cloudnary");
 const fs = require("fs");
 const transporter = require("../Utils/Mailsender");
-
-
-
 const createRecord = async (req, res) => {
     try {
         const { categoryName, productName, productDescription, productSubDescription, productDetails, productSize } = req.body;
@@ -71,7 +68,7 @@ const createRecord = async (req, res) => {
                 <h2 style="color: #007BFF;">Dear Subscriber,</h2>
                 <p>We are excited to announce the launch of our new product: <strong>${productName}</strong>.</p>
                 <p>Check it out now and enjoy our special offers!</p>
-                <a href="https://yourwebsite.com/product-page" style="display: inline-block; padding: 10px 20px; background-color: #28a745; color: #fff; text-decoration: none; border-radius: 5px; margin: 10px 0;">View Product</a>
+                <a href="https://surpriso.com/product-page" style="display: inline-block; padding: 10px 20px; background-color: #28a745; color: #fff; text-decoration: none; border-radius: 5px; margin: 10px 0;">View Product</a>
                 <p>Best regards,</p>
                 <p>The Surpriso Team</p>
             </div>
@@ -93,7 +90,6 @@ const createRecord = async (req, res) => {
         });
     }
 };
-
 const getRecord = async (req, res) => {
     try {
         const data = await Product.find()
@@ -118,7 +114,6 @@ const getRecord = async (req, res) => {
         })
     }
 }
-
 const getSingleRecord = async (req, res) => {
     try {
         const data = await Product.findOne({ _id: req.params._id })
@@ -143,7 +138,6 @@ const getSingleRecord = async (req, res) => {
         })
     }
 }
-
 const updateRecord = async (req, res) => {
     try {
         const data = await Product.findOne({ _id: req.params._id });
@@ -209,8 +203,6 @@ const updateRecord = async (req, res) => {
         });
     }
 };
-
-
 const deleteRecord = async (req, res) => {
     try {
         const data = await Product.findOne({ _id: req.params._id })
@@ -221,16 +213,6 @@ const deleteRecord = async (req, res) => {
             })
         }
         else {
-            // const allImages = [
-            //     data.productImage1,
-            //     data.productImage2,
-            //     data.productImage3,
-            //     data.productImage4,
-            //     data.productImage5,
-            //     data.productImage6,
-            //     data.productImage7,
-            //     data.productImage8
-            // ];
             const allImages = Object.keys(data.toObject()).filter(key => key.startsWith('productImage')).map(key => data[key]);
             for (const image of allImages) {
                 if (image) {

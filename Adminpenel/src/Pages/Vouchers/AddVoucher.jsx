@@ -4,13 +4,10 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-
-
 const CreateVoucher = ({ onCreate }) => {
     const [isLoading, setIsLoading] = useState(false);
     return (
         <>
-
             <div className="bread">
                 <div className="head">
                     <h4>Create Voucher</h4>
@@ -19,7 +16,6 @@ const CreateVoucher = ({ onCreate }) => {
                     <Link to="/all-voucher" className="add-new">Back <i className="fa-regular fa-circle-left"></i></Link>
                 </div>
             </div>
-
             <div className="d-form">
                 <form className="row g-3">
                     <div className="col-md-6">

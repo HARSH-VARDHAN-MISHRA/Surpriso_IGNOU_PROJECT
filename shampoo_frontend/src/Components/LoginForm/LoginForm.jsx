@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import './LoginForm.css';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-
 const LoginForm = () => {
     const navigate = useNavigate()
     const [data, setData] = useState({

@@ -4,12 +4,10 @@ import { Link } from 'react-router-dom'
 import Swal from 'sweetalert2';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 const AllCategory = () => {
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(false)
     const token = sessionStorage.getItem("token");
-
     const getApiData = async () => {
         try {
             const res = await axios.get("http://localhost:8080/api/category", {
@@ -28,7 +26,6 @@ const AllCategory = () => {
     useEffect(() => {
         getApiData()
     }, [data.length])
-
     const deleteRecord = async (_id) => {
         setLoading(true)
         try {
@@ -58,7 +55,6 @@ const AllCategory = () => {
                     <Link to="/add-category" className="add-new">Add New <i class="fa-solid fa-plus"></i></Link>
                 </div>
             </div>
-
             <div className="filteration">
                 <div className="selects">
                     {/* <select>
@@ -71,7 +67,6 @@ const AllCategory = () => {
                     <input type="text" name="search" id="search" />
                 </div>
             </div>
-
             <section className="dis-table ">
                 <table class="table table-bordered table-striped table-hover">
                     <thead>
@@ -96,11 +91,9 @@ const AllCategory = () => {
                             )
                         }
                     </tbody>
-
                 </table>
             </section>
         </>
     )
 }
-
 export default AllCategory

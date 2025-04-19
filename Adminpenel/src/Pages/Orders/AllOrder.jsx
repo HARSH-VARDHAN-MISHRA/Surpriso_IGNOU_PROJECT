@@ -4,13 +4,16 @@ import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 const AllOrder = () => {
     const [order, setOrder] = useState([])
-
+    const token = sessionStorage.getItem("token");
     const getAllorder = async () => {
         try {
-            const res = await axios.get("http://localhost:8080/api/checkout")
+            const res = await axios.get("http://localhost:8080/api/checkout", {
+                headers: {
+                    Authorization: token ? `Bearer ${token}` : "",
+                },
+            })
             console.log(res)
             if (res.status === 200) {
                 const newData = res.data.data
@@ -20,7 +23,6 @@ const AllOrder = () => {
             console.log(error)
         }
     }
-
     useEffect(() => {
         getAllorder()
     }, [])
@@ -32,31 +34,9 @@ const AllOrder = () => {
                     <h4>All Orders</h4>
                 </div>
                 <div className="links">
-                    {/* Additional links or actions can be placed here */}
+                    
                 </div>
             </div>
-
-            <div className="filteration">
-                <div className="selects">
-                    <select>
-                        <option value="All Orders">All Orders</option>
-                        {/* <option value="today">Today's Orders</option>
-                        <option value="yesterday">Yesterday's Orders</option>
-                        <option value="thisWeek">This Week's Orders</option>
-                        <option value="thisMonth">This Month's Orders</option>
-                        <option value="thisYear">This Year's Orders</option> */}
-                    </select>
-                </div>
-                <div className="search">
-                    <label htmlFor="search">Search </label>&nbsp;
-                    <input
-                        type="text"
-                        name="search"
-                        id="search"
-                    />
-                </div>
-            </div>
-
             <section className="dis-table">
                 <table className="table table-bordered table-striped table-hover">
                     <thead>
@@ -84,7 +64,7 @@ const AllOrder = () => {
                                     <td>{new Date(item.createdAt).toLocaleDateString()}</td>
                                     <td>
                                         <Link className="bt edit" to={`/edit-order/${item._id}`}>
-                                        Update <i className="fa-solid fa-pen-to-square"></i>
+                                            Update <i className="fa-solid fa-pen-to-square"></i>
                                         </Link>
                                     </td>
                                 </tr>

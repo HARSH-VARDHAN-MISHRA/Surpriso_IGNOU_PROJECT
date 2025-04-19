@@ -7,6 +7,7 @@ import Product from '../Product/Product';
 
 const SinglePage = () => {
   const navigate = useNavigate()
+  const token = sessionStorage.getItem("token");
   const [singleData, setSingleData] = useState({})
   const [backendImages, setBackendImages] = useState([])
   const { _id } = useParams()
@@ -17,34 +18,30 @@ const SinglePage = () => {
   const [activeSizeFinalPrice, setActiveSizeFinalPrice] = useState(null);
   const [activeSizeStock, setActiveSizeStock] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
   const loginvalue = sessionStorage.getItem("login");
-
   const handleSize = (productSize) => {
     setActiveSize(productSize.sizeML);
     setActiveSizePrice(productSize.price);
     setActiveSizeDiscount(productSize.discountPrice);
     setActiveSizeFinalPrice(productSize.finalPrice);
   };
-
-   const getsingleProductData = async () => {
+  const getsingleProductData = async () => {
     try {
-        let res = await axios.get("http://localhost:8080/api/product/" + _id);
-        console.log(res);
-        setSingleData(res.data.data);
-        const imageKeys = Object.keys(res.data.data).filter(key => key.startsWith('productImage'));
-        const images = imageKeys.map(key => res.data.data[key]);
-        setBackendImages(images);
-        if (res.data.data.productSize && res.data.data.productSize.length > 0) {
-            handleSize(res.data.data.productSize[0]);
-        }
+      let res = await axios.get("http://localhost:8080/api/product/" + _id);
+      console.log(res);
+      setSingleData(res.data.data);
+      const imageKeys = Object.keys(res.data.data).filter(key => key.startsWith('productImage'));
+      const images = imageKeys.map(key => res.data.data[key]);
+      setBackendImages(images);
+      if (res.data.data.productSize && res.data.data.productSize.length > 0) {
+        handleSize(res.data.data.productSize[0]);
+      }
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
-}
+  }
   const localImages = [];
   const images = backendImages.length > 0 ? backendImages : localImages;
-
   useEffect(() => {
     getsingleProductData()
     window.scrollTo({
@@ -52,19 +49,15 @@ const SinglePage = () => {
       behavior: 'smooth',
     });
   }, []);
-
   const handlePrevClick = () => {
     setCurrentImageIndex((prevIndex) => (prevIndex === 0 ? images.length - 1 : prevIndex - 1));
   };
-
   const handleNextClick = () => {
     setCurrentImageIndex((prevIndex) => (prevIndex === images.length - 1 ? 0 : prevIndex + 1));
   };
-
   const handleThumbnailClick = (index) => {
     setCurrentImageIndex(index);
   };
-
   const addToCart = async () => {
     try {
       if (activeSize && activeSizePrice) {
@@ -78,7 +71,11 @@ const SinglePage = () => {
           image: singleData.productImage1
         };
         if (newItem.quantity > 0 && loginvalue === "true") {
-          let res = await axios.post('http://localhost:8080/api/cart', newItem);
+          let res = await axios.post('http://localhost:8080/api/cart', newItem, {
+            headers: {
+              Authorization: token ? `Bearer ${token}` : "",
+            }
+          });
           if (res.status === 200) {
             toast.success("Product Added to cart");
             navigate("/cart");
@@ -96,7 +93,6 @@ const SinglePage = () => {
       console.error('Error adding item to cart:', error);
     }
   };
-
   return (
     <>
       <div className="product-details-container">
@@ -135,7 +131,7 @@ const SinglePage = () => {
           <div className="product-info-column">
             <p className="product-title">{singleData.categoryName}</p>
             <p className="product-description">{singleData.productName}
-            <p className="product-description">{singleData.productSubDescription}</p>
+              <p className="product-description">{singleData.productSubDescription}</p>
             </p>
             <div className="rating">
               <i className="fa fa-star rating-icon"></i>
@@ -187,7 +183,6 @@ const SinglePage = () => {
           </div>
         </div>
       </div>
-
       <hr />
       <div>
         <Product />

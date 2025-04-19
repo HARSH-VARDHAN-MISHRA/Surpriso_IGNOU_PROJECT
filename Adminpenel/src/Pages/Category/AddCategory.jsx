@@ -3,12 +3,10 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 const AddCategory = () => {
     const navigate = useNavigate()
     const [isLoading, setIsloding] = useState(false)
     const token = sessionStorage.getItem("token");
-
     const [data, setData] = useState({
         categoryName: "",
         categoryImage: ""
@@ -21,11 +19,9 @@ const AddCategory = () => {
         const { name, files } = e.target
         setData({ ...data, [name]: files[0] })
     }
-
     const formData = new FormData()
     formData.append("categoryName", data.categoryName)
     formData.append("categoryImage", data.categoryImage)
-
     const postData = async (e) => {
         e.preventDefault()
         setIsloding(true)
@@ -58,7 +54,6 @@ const AddCategory = () => {
                     <Link to="/all-category" className="add-new">Back <i className="fa-regular fa-circle-left"></i></Link>
                 </div>
             </div>
-
             <div className="d-form">
                 <form className="row g-3" onSubmit={postData}>
                     <div className="col-md-6">
@@ -85,5 +80,4 @@ const AddCategory = () => {
         </>
     );
 }
-
 export default AddCategory;

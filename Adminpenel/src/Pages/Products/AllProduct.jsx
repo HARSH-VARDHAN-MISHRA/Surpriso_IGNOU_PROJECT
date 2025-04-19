@@ -8,7 +8,6 @@ import 'react-toastify/dist/ReactToastify.css';
 const AllProduct = () => {
     const [data, setData] = useState([])
     const token = sessionStorage.getItem("token");
-
     const getProductData = async () => {
         try {
             const res = await axios.get("http://localhost:8080/api/product", {
@@ -24,7 +23,6 @@ const AllProduct = () => {
             console.log(error)
         }
     }
-
     const deleteProduct = async (_id) => {
         try {
             const res = await axios.delete("http://localhost:8080/api/product/" + _id, {
@@ -39,7 +37,6 @@ const AllProduct = () => {
             toast.error(error.response.data.message)
         }
     }
-
     useEffect(() => {
         getProductData()
     }, [])
@@ -54,13 +51,12 @@ const AllProduct = () => {
                     <Link to="/add-product" className="add-new">Add New <i class="fa-solid fa-plus"></i></Link>
                 </div>
             </div>
-
             <div className="filteration">
                 <div className="selects">
-                    {/* <select>
+                    <select>
                         <option>Ascending Order </option>
                         <option>Descending Order </option>
-                    </select> */}
+                    </select>
                 </div>
                 <div className="search">
                     <label htmlFor="search">Search </label> &nbsp;
@@ -75,8 +71,8 @@ const AllProduct = () => {
                             <th scope="col">Sr.No.</th>
                             <th scope="col">Category</th>
                             <th scope="col">Product Name</th>
-                            {/* <th scope="col">Product Description</th> */}
-                            {/* <th scope="col">Product Details</th> */}
+                            <th scope="col">Product Description</th>
+                            <th scope="col">Product Details</th>
                             <th scope="col">Product Image</th>
                             <th scope="col">Product Image</th>
                             <th scope="col">Edit</th>
@@ -89,8 +85,8 @@ const AllProduct = () => {
                                 <th scope="row">{index + 1}</th>
                                 <td>{item.categoryName}</td>
                                 <td>{item.productName}</td>
-                                {/* <td>{item.productDescription}</td> */}
-                                {/* <td>{item.productDetails}</td> */}
+                                <td>{item.productDescription}</td>
+                                <td>{item.productDetails}</td>
                                 <td><img src={item.productImage1} alt={item.productName} style={{ width: '50px', height: '50px' }} /></td>
                                 <td><img src={item.productImage2} alt={item.productName} style={{ width: '50px', height: '50px' }} /></td>
                                 <td><Link className="bt edit" to={`/edit-product/${item._id}`}>Edit <i className="fa-solid fa-pen-to-square"></i></Link></td>

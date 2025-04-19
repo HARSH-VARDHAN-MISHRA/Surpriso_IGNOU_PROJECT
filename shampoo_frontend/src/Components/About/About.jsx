@@ -29,11 +29,6 @@ const About = () => {
                 </div> : null
             }
             {/* <!-- Hero End --> */}
-
-
-
-
-
             {/* <!-- About Start --> */}
             <div className="container-fluid">
                 <div className="container">
@@ -58,12 +53,8 @@ const About = () => {
                     </div>
                 </div>
             </div>
-
             {/* <!-- About End --> */}
-
             {location === '/about' ? <Newsletter /> : null}
-
-
         </>
     )
 }

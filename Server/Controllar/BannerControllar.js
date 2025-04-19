@@ -154,10 +154,4 @@ const deleteBanner = async (req, res) => {
     }
 }
 
-module.exports = {
-    createBanner: createBanner,
-    getBanner: getBanner,
-    updateRecord: updateRecord,
-    getSingleRecord: getSingleRecord,
-    deleteBanner: deleteBanner
-};
+module.exports = { createBanner: createBanner, getBanner: getBanner, updateRecord: updateRecord, getSingleRecord: getSingleRecord, deleteBanner: deleteBanner };

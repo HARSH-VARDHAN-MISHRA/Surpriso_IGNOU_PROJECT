@@ -6,11 +6,9 @@ const Newsletter = () => {
     const [data, setData] = useState({
         email: ""
     });
-
     const getInputdata = (e) => {
         setData({ ...data, [e.target.name]: e.target.value });
     };
-
     const postdata = async (e) => {
         e.preventDefault();
         try {
@@ -25,7 +23,6 @@ const Newsletter = () => {
             toast.error(error.response.data.message);
         }
     };
-
     return (
         <>
             {/* <!-- Newsletter Start --> */}
@@ -35,7 +32,6 @@ const Newsletter = () => {
                         <h1 className="text-white mb-3"><span className="fw-light text-dark">Let's Subscribe</span> The Newsletter</h1>
                         <p className="text-white mb-4">Subscribe now to get 30% discount on any of our products</p>
                     </div>
-
                     <div className="row justify-content-center">
                         <div className="col-md-7 wow fadeIn" data-wow-delay="0.5s">
                             <div className="position-relative w-100 mt-3 mb-2">
@@ -55,7 +51,6 @@ const Newsletter = () => {
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
             {/* <!-- Newsletter End --> */}

@@ -1,11 +1,8 @@
 const newsletter = require("../Model/Newsletter")
 const transporter = require("../Utils/Mailsender")
-
 const createRecord = async (req, res) => {
     try {
-        const { email } = req.body
-        console.log(req.body)
-        console.log("I am hit")
+        const { email } = req.body;
         if (!email) {
             return res.status(401).json({
                 success: false,
@@ -61,7 +58,6 @@ const createRecord = async (req, res) => {
         })
     }
 }
-
 const getRecord = async (req, res) => {
     try {
         const data = await newsletter.find()
@@ -86,7 +82,4 @@ const getRecord = async (req, res) => {
         })
     }
 }
-
-module.exports = {
-    createRecord, getRecord
-}
+module.exports = { createRecord, getRecord }

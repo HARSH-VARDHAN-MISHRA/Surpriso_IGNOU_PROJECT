@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import add from '../../Images/user.png';
-import rem from '../../Images/check-out.png';
 import cart from '../../Images/online-shopping.png';
 
 const Navbar = () => {
   const [login, setLogin] = useState(false);
-
   useEffect(() => {
     setLogin(sessionStorage.getItem("login") === "true");
   }, []);
@@ -51,7 +49,6 @@ const Navbar = () => {
                   </Link>
                 )}
               </div>
-
             </div>
           </nav>
         </div>

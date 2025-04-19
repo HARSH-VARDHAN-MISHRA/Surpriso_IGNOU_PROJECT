@@ -14,7 +14,6 @@ const Product = () => {
     const getProductdata = async () => {
         try {
             const res = await axios.get("http://localhost:8080/api/product")
-            console.log(res)
             setProduct(res.data.data)
             setFilteredProducts(res.data.data)
         } catch (error) {
@@ -29,7 +28,6 @@ const Product = () => {
             console.log(error)
         }
     }
-
     useEffect(() => {
         getProductdata()
         getcategorydata()
@@ -38,11 +36,9 @@ const Product = () => {
             behavior: "smooth"
         })
     }, [])
-
     useEffect(() => {
         filterProducts()
     }, [minPrice, maxPrice, category])
-
     const filterProducts = () => {
         let filtered = product.filter(item => {
             let productPrice = item.productSize[0].finalPrice
@@ -51,7 +47,6 @@ const Product = () => {
         })
         setFilteredProducts(filtered)
     }
-
     return (
         <>
             {/* <!-- Hero Start --> */}
@@ -71,16 +66,15 @@ const Product = () => {
             }
             {/* <!-- Hero End --> */}
 
-
             {/* <!-- Product Start --> */}
             {
                 location === '/product' ?
                     <div className="container-fluid py-5">
                         <div className="container">
-                            <div className="mx-auto text-center wow fadeIn" data-wow-delay="0.1s" style={{ maxWidth: "600px" }}>
+                            {/* <div className="mx-auto text-center wow fadeIn" data-wow-delay="0.1s" style={{ maxWidth: "600px" }}>
                                 <h1 className="text-primary mb-3"><span className="fw-light text-dark">Our Natural</span> Hair Products</h1>
                                 <p className="mb-5">Our natural hair products nourish and strengthen your hair, using organic ingredients for healthier, shinier, and more vibrant locks.</p>
-                            </div>
+                            </div> */}
                             <div className="row g-4">
                                 <div className="col-md-3">
                                     <div className="filter-section">
@@ -120,9 +114,9 @@ const Product = () => {
                                             </div>
                                         ))}
                                     </div>
-                                    <div className="col-12 text-center mt-4">
+                                    {/* <div className="col-12 text-center mt-4">
                                         <a className="btn btn-primary py-2 px-4" href="">Load More Products</a>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </div>
@@ -152,9 +146,9 @@ const Product = () => {
                                             </div>
                                         </div>
                                     )}
-                                <div className="col-12 text-center">
+                                {/* <div className="col-12 text-center">
                                     <a className="btn btn-primary py-2 px-4" href="">Load More Products</a>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </div>

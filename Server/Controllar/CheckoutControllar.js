@@ -1,12 +1,10 @@
 const Checkout = require("../Model/CheckoutModel");
 const razorpay = require('razorpay');
 const crypto = require('crypto');
-
 var instance = new razorpay({
     key_id: process.env.RAZORPAY_API_KEY || "rzp_test_XPcfzOlm39oYi8",
     key_secret: process.env.RAZORPAY_API_SECRET || "Q79P6w7erUar31TwW4GLAkpa",
 });
-
 const placeOrder = async (req, res) => {
     try {
         const { userid, total, products, paymentmode } = req.body;
@@ -59,7 +57,6 @@ const placeOrder = async (req, res) => {
         });
     }
 };
-
 const paymentVerification = async (req, res) => {
     try {
         const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
@@ -113,7 +110,6 @@ const paymentVerification = async (req, res) => {
         });
     }
 };
-
 const getUserRecord = async (req, res) => {
     try {
         let data = await Checkout.find({ userid: req.params.userid })
@@ -129,7 +125,6 @@ const getUserRecord = async (req, res) => {
         })
     }
 }
-
 const getRecord = async (req, res) => {
     try {
         let data = await Checkout.find()
@@ -161,7 +156,6 @@ const getSingleOrder = async (req, res) => {
         })
     }
 }
-
 const updateOrderRecord = async (req, res) => {
     try {
         let data = await Checkout.findOne({ _id: req.params._id })
@@ -182,12 +176,4 @@ const updateOrderRecord = async (req, res) => {
         })
     }
 }
-
-module.exports = {
-    placeOrder: placeOrder,
-    getUserRecord: getUserRecord,
-    getRecord: getRecord,
-    paymentVerification: paymentVerification,
-    getSingleOrder: getSingleOrder,
-    updateOrderRecord: updateOrderRecord
-}
+module.exports = { placeOrder: placeOrder, getUserRecord: getUserRecord, getRecord: getRecord, paymentVerification: paymentVerification, getSingleOrder: getSingleOrder, updateOrderRecord: updateOrderRecord }

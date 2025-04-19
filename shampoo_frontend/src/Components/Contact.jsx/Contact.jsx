@@ -88,7 +88,7 @@ const Contact = () => {
                                 <div className="border py-5 px-3">
                                     <i className="fa fa-envelope fa-3x text-dark mb-4"></i>
                                     <h5 className="text-white">Mail Us</h5>
-                                    <h5 className="fw-light text-white">info@example.com</h5>
+                                    <h5 className="fw-light text-white">info@surpriso.com</h5>
                                 </div>
                             </div>
                         </div>

@@ -3,12 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 const AddProduct = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [category, setCategory] = useState([]);
     const token = sessionStorage.getItem("token");
-
     const navigate = useNavigate()
     const [data, setData] = useState({
         categoryName: "",
@@ -27,7 +25,6 @@ const AddProduct = () => {
         productImage8: ""
     });
     const [imageFields, setImageFields] = useState(["productImage1"]);
-
     useEffect(() => {
         const getCategoryData = async () => {
             try {
@@ -45,17 +42,14 @@ const AddProduct = () => {
         };
         getCategoryData();
     }, []);
-
     const getInputData = (e) => {
         const { name, value } = e.target;
         setData({ ...data, [name]: value });
     };
-
     const getFileData = (e) => {
         const { name, files } = e.target;
         setData({ ...data, [name]: files[0] });
     };
-
     const handleSizeChange = (index, e) => {
         const { name, value } = e.target;
         const updatedSizes = [...data.productSize];
@@ -68,33 +62,27 @@ const AddProduct = () => {
                 updatedSizes[index].finalPrice = calculateFinalPrice(price, discount);
             }
         }
-
         setData({ ...data, productSize: updatedSizes });
     };
-
     const calculateFinalPrice = (price, discount) => {
         const discountAmount = (price * discount) / 100;
         return price - discountAmount;
     };
-
     const addSize = () => {
         setData({
             ...data,
             productSize: [...data.productSize, { sizeML: "", price: "", discountPrice: "", finalPrice: "", stock: "" }]
         });
     };
-
     const removeSize = (index) => {
         const updatedSizes = data.productSize.filter((_, i) => i !== index);
         setData({ ...data, productSize: updatedSizes });
     };
-
     const addImageField = () => {
         const newFieldName = `productImage${imageFields.length + 1}`;
         setImageFields([...imageFields, newFieldName]);
         setData({ ...data, [newFieldName]: "" });
     };
-
     const removeImageField = (index) => {
         const fieldName = imageFields[index];
         const updatedFields = imageFields.filter((_, i) => i !== index);
@@ -103,11 +91,9 @@ const AddProduct = () => {
         setImageFields(updatedFields);
         setData(newData);
     };
-
     const postData = async (e) => {
         e.preventDefault();
         setIsLoading(true);
-
         const formData = new FormData();
         formData.append('categoryName', data.categoryName);
         formData.append('productName', data.productName);
@@ -124,7 +110,6 @@ const AddProduct = () => {
         imageFields.forEach(field => {
             formData.append(field, data[field]);
         });
-
         try {
             const res = await axios.post("http://localhost:8080/api/product", formData, {
                 headers: {
@@ -142,7 +127,6 @@ const AddProduct = () => {
             setIsLoading(false);
         }
     };
-
     return (
         <>
             <ToastContainer />
@@ -154,7 +138,6 @@ const AddProduct = () => {
                     <Link to="/all-products" className="add-new">Back <i className="fa-regular fa-circle-left"></i></Link>
                 </div>
             </div>
-
             <div className="d-form">
                 <form className="row g-3" onSubmit={postData}>
                     <div className="col-md-4">
@@ -166,27 +149,22 @@ const AddProduct = () => {
                             )}
                         </select>
                     </div>
-
                     <div className="col-md-8">
                         <label htmlFor="productName" className="form-label">Product Name<sup className='text-danger'>*</sup></label>
                         <input type="text" name='productName' onChange={getInputData} className="form-control" required id="productName" />
                     </div>
-
                     <div className="col-12">
                         <label htmlFor="productSubDescription" className="form-label">Product Sub Description<sup className='text-danger'>*</sup></label>
                         <textarea name='productSubDescription' onChange={getInputData} className="form-control" required id="productSubDescription" />
                     </div>
-
                     <div className="col-12">
                         <label htmlFor="productDescription" className="form-label">Product Description<sup className='text-danger'>*</sup></label>
                         <textarea name='productDescription' onChange={getInputData} className="form-control" required id="productDescription" />
                     </div>
-
                     <div className="col-12">
                         <label htmlFor="productDetails" className="form-label">Product Details<sup className='text-danger'>*</sup></label>
                         <textarea name='productDetails' onChange={getInputData} className="form-control" required id="productDetails" />
                     </div>
-
                     {data.productSize.map((size, index) => (
                         <div key={index} className="row g-3 align-items-end">
                             <div className="col-md-2">
@@ -214,11 +192,9 @@ const AddProduct = () => {
                             </div>
                         </div>
                     ))}
-
                     <div className="col-12">
                         <button type="button" className='btn btn-success' onClick={addSize}>Add New Size</button>
                     </div>
-
                     {imageFields.map((field, index) => (
                         <div key={index} className="col-md-3">
                             <label htmlFor={field}>Image<sup className='text-danger'>*</sup></label>
@@ -228,11 +204,9 @@ const AddProduct = () => {
                             )}
                         </div>
                     ))}
-
                     <div className="col-12">
                         <button type="button" className='btn btn-success' onClick={addImageField}>Add New Image</button>
                     </div>
-
                     <div className="col-12 text-center">
                         <button type="submit" className={`btn btn-primary ${isLoading ? 'not-allowed' : ''}`} disabled={isLoading}>
                             {isLoading ? "Please Wait..." : "Add Product"}
@@ -243,5 +217,4 @@ const AddProduct = () => {
         </>
     );
 };
-
 export default AddProduct;

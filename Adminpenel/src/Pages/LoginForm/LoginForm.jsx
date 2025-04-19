@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import './LoginForm.css';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-
 const LoginForm = () => {
     const navigate = useNavigate()
     const [data, setData] = useState({
@@ -18,15 +17,11 @@ const LoginForm = () => {
         e.preventDefault();
         try {
             const res = await axios.post("http://localhost:8080/api/user/login", data);
-            console.log(res);
-            
             if (res.status === 200) {
                 if (res.data.data.role === "Admin") {
                     toast.success("Login Successfully as Admin");
-                    
                     sessionStorage.setItem("login", true);
                     sessionStorage.setItem("token", res.data.token);
-    
                     setTimeout(() => {
                         navigate("/dashboard");
                         window.location.reload();
@@ -40,7 +35,6 @@ const LoginForm = () => {
             toast.error(errorMessage);
         }
     };
-    
     return (
         <div className="login-container">
             <div className="login-form">
@@ -63,5 +57,4 @@ const LoginForm = () => {
         </div>
     );
 };
-
 export default LoginForm;

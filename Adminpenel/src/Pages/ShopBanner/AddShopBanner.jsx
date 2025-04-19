@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 const AddShopBanner = () => {
     const [isLoading, setIsloding] = useState(false)
     return (
@@ -17,7 +16,6 @@ const AddShopBanner = () => {
                     <Link to="/all-shop-banners" className="add-new">Back <i className="fa-regular fa-circle-left"></i></Link>
                 </div>
             </div>
-
             <div className="d-form">
                 <form className="row g-3">
                     <div className="col-md-6">
@@ -44,5 +42,4 @@ const AddShopBanner = () => {
         </>
     );
 }
-
 export default AddShopBanner;

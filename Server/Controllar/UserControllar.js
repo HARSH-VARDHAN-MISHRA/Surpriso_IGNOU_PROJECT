@@ -276,13 +276,4 @@ const forgetPassword3 = async (req, res) => {
     }
 }
 
-module.exports = {
-    createRecord: createRecord,
-    getSingleRecord: getSingleRecord,
-    login: login,
-    forgetPassword1: forgetPassword1,
-    forgetPassword2: forgetPassword2,
-    forgetPassword3: forgetPassword3,
-    updateRecord: updateRecord,
-    getRecord: getRecord
-}
+module.exports = { createRecord: createRecord, getSingleRecord: getSingleRecord, login: login, forgetPassword1: forgetPassword1, forgetPassword2: forgetPassword2, forgetPassword3: forgetPassword3, updateRecord: updateRecord, getRecord: getRecord }

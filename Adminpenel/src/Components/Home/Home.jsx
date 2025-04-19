@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
-
 import Header from '../Header/Header'
 import Dashboard from '../../Pages/Dashboard/Dashboard'
 import AllCategory from '../../Pages/Category/AllCategory'
@@ -24,10 +23,8 @@ import AllOrder from '../../Pages/Orders/AllOrder'
 import EditOrder from '../../Pages/Orders/EditOrder'
 import AllUsers from '../../Pages/Users/AllUsers'
 import LoginForm from '../../Pages/LoginForm/LoginForm'
-
 const Home = () => {
   const [login, setLogin] = useState(false)
-
   useEffect(() => {
     setLogin(sessionStorage.getItem("login"))
   }, [])

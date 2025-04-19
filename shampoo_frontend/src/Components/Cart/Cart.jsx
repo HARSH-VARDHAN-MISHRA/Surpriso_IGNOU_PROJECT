@@ -2,21 +2,22 @@ import React, { useEffect, useState } from 'react';
 import './Cart.css';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-
 const Cart = () => {
   const [data, setData] = useState([]);
   const token = sessionStorage.getItem("token");
-
   const getCartdata = async () => {
     try {
-      let res = await axios.get("http://localhost:8080/api/cart/" + sessionStorage.getItem("userid"))
+      let res = await axios.get("http://localhost:8080/api/cart/" + sessionStorage.getItem("userid"), {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : "",
+        },
+      })
       setData(res.data.data)
       console.log(res)
     } catch (error) {
       console.log(error)
     }
   }
-
   const updateItem = async (itemId, action) => {
     try {
       const itemToUpdate = data.find(item => item._id === itemId);
@@ -29,17 +30,24 @@ const Cart = () => {
       } else {
         return;
       }
-      const res = await axios.put(`http://localhost:8080/api/cart/${itemId}`, { quantity: updatedQty });
+      const res = await axios.put(`http://localhost:8080/api/cart/${itemId}`, { quantity: updatedQty }, {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : "",
+        },
+      });
       console.log(res);
       getCartdata();
     } catch (error) {
       console.log(error);
     }
   };
-
   const deleteItem = async (_id) => {
     try {
-      let res = await axios.delete('http://localhost:8080/api/cart/' + _id);
+      let res = await axios.delete('http://localhost:8080/api/cart/' + _id, {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : "",
+        },
+      });
       console.log(res);
       getCartdata();
     } catch (error) {
@@ -121,7 +129,6 @@ const Cart = () => {
             <div className="col-8"></div>
             <div className="col-sm-8 col-md-7 col-lg-6 col-xl-4">
               <div className="bg-light rounded">
-                {/* Removed subtotal and total section */}
                 <Link to='/checkout' className="btn btn-dark border-primary w-100 text-light text-uppercase" type="button">Proceed Checkout</Link>
               </div>
             </div>

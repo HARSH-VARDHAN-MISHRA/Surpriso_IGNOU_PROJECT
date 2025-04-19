@@ -11,7 +11,6 @@ const EditBanner = () => {
     const [data, setData] = useState({
         bannerImage: ""
     })
-
     const getApiData = async () => {
         try {
             const res = await axios.get("http://localhost:8080/api/banner/" + _id)
@@ -32,8 +31,6 @@ const EditBanner = () => {
 
     const formData = new FormData()
     formData.append("bannerImage", data.bannerImage)
-
-
     const postData = async (e) => {
         e.preventDefault()
         setBtnLoading(true)
@@ -61,7 +58,6 @@ const EditBanner = () => {
                     <Link to="/all-banners" className="add-new">Back <i className="fa-regular fa-circle-left"></i></Link>
                 </div>
             </div>
-
             <div className="d-form">
                 <form className="row g-3" onSubmit={postData}>
                     <div className="col-md-6">

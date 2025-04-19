@@ -18,12 +18,12 @@ const PaymentSuccess = () => {
         <div className="col-lg-6 mb-5" data-aos="fade-up">
           <h2 className="display-4 text-danger mb-4">Payment Successful!</h2>
           <p className="fs-5 mb-4">Thank you for your purchase. Your order has been placed successfully.</p>
-          <div className="card shadow-sm mb-4">
+          {/* <div className="card shadow-sm mb-4">
             <div className="card-body">
               <h3 className="card-title fs-4">Order Information</h3>
              
             </div>
-          </div>
+          </div> */}
           <Link to={'/'} className="btn btn-primary btn-lg">
             Shop More
           </Link>

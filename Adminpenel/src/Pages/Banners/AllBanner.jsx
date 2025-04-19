@@ -3,14 +3,12 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 const AllBanner = () => {
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState([]);
     const [page, setPage] = useState(1);
     const limit = 10;
     const token = sessionStorage.getItem("token");
-
     const getBanner = async () => {
         try {
             const res = await axios.get("http://localhost:8080/api/banner", {
@@ -23,11 +21,9 @@ const AllBanner = () => {
             toast.error(error.response?.data?.message || 'An error occurred');
         }
     };
-
     useEffect(() => {
         getBanner();
     }, []);
-
     const deleteBanner = async (_id) => {
         setLoading(true);
         try {
@@ -43,17 +39,13 @@ const AllBanner = () => {
             setLoading(false);
         }
     };
-
     const handlePreviousPage = () => {
         if (page > 1) setPage(page - 1);
     };
-
     const handleNextPage = () => {
         if (page < data.length / limit) setPage(page + 1);
     };
-
     const currentData = data.slice((page - 1) * limit, page * limit);
-
     return (
         <>
             <ToastContainer />
@@ -65,14 +57,12 @@ const AllBanner = () => {
                     <Link to="/add-banner" className="add-new">Add New <i className="fa-solid fa-plus"></i></Link>
                 </div>
             </div>
-
             <div className="filteration">
                 <div className="search">
                     <label htmlFor="search">Search</label> &nbsp;
                     <input type="text" name="search" id="search" />
                 </div>
             </div>
-
             <section className="dis-table">
                 <table className="table table-bordered table-striped table-hover">
                     <thead>
@@ -95,7 +85,6 @@ const AllBanner = () => {
                     </tbody>
                 </table>
             </section>
-
             <div className="pagination">
                 <button onClick={handlePreviousPage} disabled={page === 1} className='btn btn-primary'>Previous</button>
                 <span>&nbsp; Page {page} of {Math.ceil(data.length / limit)} &nbsp;</span>

@@ -5,11 +5,11 @@ import './Profile.css'
 
 const Profile = () => {
     const navigate = useNavigate()
+    const token = sessionStorage.getItem("token");
     const [user, setUser] = useState({});
     const [order, setOrder] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 2;
-
     const logout = () => {
         sessionStorage.clear()
         window.location.reload()
@@ -19,24 +19,30 @@ const Profile = () => {
     useEffect(() => {
         const getApiData = async () => {
             try {
-                let res = await axios.get("http://localhost:8080/api/user/" + sessionStorage.getItem("userid"));
+                let res = await axios.get("http://localhost:8080/api/user/" + sessionStorage.getItem("userid"), {
+                    headers: {
+                      Authorization: token ? `Bearer ${token}` : "",
+                    },
+                  });
                 setUser(res.data.data);
                 console.log(res)
             } catch (error) {
                 console.log(error);
             }
         };
-
         const getOrderData = async () => {
             try {
-                let res = await axios.get("http://localhost:8080/api/checkout/" + sessionStorage.getItem("userid"));
+                let res = await axios.get("http://localhost:8080/api/checkout/" + sessionStorage.getItem("userid"), {
+                    headers: {
+                      Authorization: token ? `Bearer ${token}` : "",
+                    },
+                  });
                 const newData = res.data.data
                 setOrder(newData.reverse());
             } catch (error) {
                 console.log(error);
             }
         };
-
         getApiData();
         getOrderData();
         window.scrollTo({
@@ -54,7 +60,6 @@ const Profile = () => {
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
-
     return (
         <>
             <div className="container profileheight">

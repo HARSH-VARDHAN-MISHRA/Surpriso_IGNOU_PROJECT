@@ -28,6 +28,6 @@ ProductRouter.put("/product/:_id", verifyAdmin, upload.fields([
 
 ProductRouter.get("/product", getRecord)
 ProductRouter.get("/product/:_id",  getSingleRecord)
-ProductRouter.delete("/product/:_id",  deleteRecord)
+ProductRouter.delete("/product/:_id",verifyAdmin,  deleteRecord)
 
 module.exports = ProductRouter
